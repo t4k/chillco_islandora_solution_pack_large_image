@@ -1,0 +1,238 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function chillco_islandora_solution_pack_large_image_menu() {
+  $items = array();
+  $items['admin/islandora/chillco_large_image'] = array(
+    'title' => 'Chillco Large Image Collection',
+    'description' => 'Configure the Large Image Solution Pack.',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer site configuration'),
+    'page arguments' => array('chillco_islandora_solution_pack_large_image_admin'),
+    'file' => 'includes/admin.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_image_default_styles().
+ */
+function chillco_islandora_solution_pack_large_image_image_default_styles() {
+  $styles = array();
+
+  $styles['chillco_islandora_solution_pack_large_image_tn'] = array(
+    'label' => 'Chillco Large Image Pack - Thumbnail',
+    'effects' => array(
+      array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 100,
+          'height' => 100,
+          'upscale' => 1,
+        ),
+        'weight' => 0,
+      ),
+    ),
+  );
+
+  $styles['chillco_islandora_solution_pack_large_image_medium'] = array(
+    'label' => 'Chillco Large Image Pack - Medium',
+    'effects' => array(
+      array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 220,
+          'height' => 220,
+          'upscale' => 1,
+        ),
+        'weight' => 0,
+      ),
+    ),
+  );
+
+  $styles['chillco_islandora_solution_pack_large_image_large'] = array(
+    'label' => 'Chillco Large Image Pack - Large',
+    'effects' => array(
+      array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 480,
+          'height' => 480,
+          'upscale' => 1,
+        ),
+        'weight' => 0,
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
+ * Implements hook_islandora_required_objects().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_required_objects(IslandoraTuque $connection) {
+  $module_path = drupal_get_path('module', 'chillco_islandora_solution_pack_large_image');
+  // Large Image Content Model.
+  $large_image_content_model = $connection->repository->constructObject('islandora:chillco_isp_large_image_cmodel');
+  $large_image_content_model->owner = 'fedoraAdmin';
+  $large_image_content_model->label = 'Chillco Islandora Large Image Content Model';
+  $large_image_content_model->models = 'fedora-system:ContentModel-3.0';
+
+  // DS-COMPOSITE-MODEL Datastream.
+  $datastream = $large_image_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+  $datastream->label = 'DS-COMPOSITE-MODEL';
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/chillco_islandora_solution_pack_large_image_ds_composite_model.xml", FALSE);
+  $large_image_content_model->ingestDatastream($datastream);
+
+  // Large Image Collection.
+  $large_image_collection = $connection->repository->constructObject('islandora:chillco_isp_large_image_collection');
+  $large_image_collection->owner = 'fedoraAdmin';
+  $large_image_collection->label = 'Chillco Large Image Collection';
+  $large_image_collection->models = 'islandora:collectionCModel';
+  $large_image_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
+
+  // Collection Policy Datastream.
+  $datastream = $large_image_collection->constructDatastream('COLLECTION_POLICY', 'X');
+  $datastream->label = 'Collection policy';
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/chillco_islandora_solution_pack_large_image_collection_policy.xml", FALSE);
+  $large_image_collection->ingestDatastream($datastream);
+
+  // TN Datastream.
+  $datastream = $large_image_collection->constructDatastream('TN', 'M');
+  $datastream->label = 'Thumbnail';
+  $datastream->mimetype = 'image/png';
+  $datastream->setContentFromFile("$module_path/images/folder.png", FALSE);
+  $large_image_collection->ingestDatastream($datastream);
+  return array(
+    'chillco_islandora_solution_pack_large_image' => array(
+      'title' => 'Chillco Islandora Solution Pack - Large Image',
+      'objects' => array(
+        $large_image_content_model,
+        $large_image_collection,
+      ),
+    ),
+  );  
+}
+
+/**
+ * Implements hook_islandora_xml_form_builder_forms().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_xml_form_builder_forms() {
+  $module_path = drupal_get_path('module', 'chillco_islandora_solution_pack_large_image');
+  return array(
+    'Chillco Large image MODS form' => array(
+      'form_file' => "$module_path/xml/chillco_islandora_solution_pack_large_image_mods_form.xml",
+    ),
+  );
+}
+
+/**
+ * Implements hook_islandora_content_model_forms_form_associations().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_content_model_forms_form_associations() {
+  return array(
+    'chillco_islandora_solution_pack_large_image_mods_form' => array(
+      'content_model' => 'islandora:chillco_isp_large_image_cmodel',
+      'form_name' => 'Chillco Large image MODS form',
+      'dsid' => 'MODS',
+      'title_field' => array('titleInfo', 'title'),
+      'transform' => 'mods_to_dc.xsl',
+      'template' => FALSE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_CMODEL_PID_DSID_islandora_datastream_ingested().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_OBJ_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
+  chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_islandora_object_ingested($object);
+}
+
+/**
+ * Implements hook_CMODEL_PID_DSID_islandora_datastream_ingested().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_IMAGE_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
+  chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_islandora_object_ingested($object);
+}
+
+/**
+ * Implements hook_CMODEL_PID_islandora_object_ingested().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_islandora_object_ingested(AbstractObject $object) {
+  static $object_id;
+  if ($object_id !== $object->id) {
+    $object_id = $object->id;
+    module_load_include('inc', 'chillco_islandora_solution_pack_large_image', 'includes/derivatives');
+    chillco_islandora_solution_pack_large_image_create_all_derivatives($object, FALSE);
+  }
+}
+
+/**
+ * Implements hook_CMODEL_PID_islandora_ingest_steps().
+ */
+function chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_islandora_ingest_steps() {
+  return array(
+    'chillco_islandora_solution_pack_large_image' => array(
+      'weight' => 10,
+      'type' => 'form',
+      'form_id' => 'chillco_islandora_solution_pack_large_image_image_upload_form',
+      'module' => 'chillco_islandora_solution_pack_large_image',
+      'file' => 'includes/image_upload.form.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_FORMID_alter().
+ */
+function chillco_islandora_solution_pack_large_image_form_system_image_toolkit_settings_alter(&$form, &$form_state, $form_id) {
+  if (image_get_toolkit() != 'imagemagick') {
+    return;
+  }
+
+  $form['image_toolkit_settings']['imagemagick']['imagemagick_advanced_density'] = array(
+    '#type' => 'select',
+    '#title' => t('Change image resolution'),
+    '#default_value' => variable_get('imagemagick_advanced_density', '72'),
+    '#options' => array(
+      '0' => '0 - imagemagick default',
+      '72' => '72 ppi',
+      '96' => '96 ppi',
+      '150' => '150 ppi',
+      '300' => '300 ppi',
+      '2540' => '2540 ppi',
+      '4000' => '4000 ppi',
+    ),
+    '#description' => t('Resamples the image <a href="@help-url">density</a>. Use 0 for imagemagick default, or 72 (web quality) and higher.', array(
+      '@help-url' => 'http://www.imagemagick.org/script/command-line-options.php#density',
+    )),
+  );
+}

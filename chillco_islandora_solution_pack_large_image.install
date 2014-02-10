@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implements hook_enable()
+ */
+function chillco_islandora_solution_pack_large_image_enable() {
+    db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('type', 'module')
+    ->condition('name', 'chillco_islandora_solution_pack_large_image')
+    ->execute();
+}

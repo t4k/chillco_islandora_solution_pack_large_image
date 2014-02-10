@@ -1,0 +1,9 @@
+name = "Chillco Islandora Large Image Solution Pack"
+description = "A chillco fork of the Islandora Large Image Solution Pack"
+dependencies[] = islandora
+dependencies[] = imagemagick
+package = Chillco
+version = 7.x-0.1
+core = 7.x
+configure = admin/islandora/chillco_large_image
+stylesheets[all][] = css/chillco_islandora_large_image.theme.css

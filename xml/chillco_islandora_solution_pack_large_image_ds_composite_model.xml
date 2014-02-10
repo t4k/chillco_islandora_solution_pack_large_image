@@ -1,0 +1,46 @@
+<dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#">
+  <!-- using this as a guide -->
+  <dsTypeModel ID="DC">
+    <form FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" MIME="text/xml"/>
+  </dsTypeModel>
+  <dsTypeModel ID="RELS-EXT" optional="true">
+    <form FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" MIME="application/rdf+xml"/>
+  </dsTypeModel>
+  <dsTypeModel ID="RELS-INT" optional="true">
+    <form FORMAT_URI="info:fedora/fedora-system:FedoraRELSInt-1.0" MIME="application/rdf+xml"/>
+  </dsTypeModel>
+  <dsTypeModel ID="MODS" optional="true">
+    <form FORMAT_URI="http://www.loc.gov/mods/v3" MIME="text/xml"/>
+  </dsTypeModel>
+  <dsTypeModel ID="TN" ORDERED="false">
+    <form MIME="image/jpg"></form>
+    <form MIME="image/jpeg"></form>
+    <form MIME="image/png"></form>
+    <form MIME="image/gif"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="MEDIUM" ORDERED="false">
+    <form MIME="image/jpg"></form>
+    <form MIME="image/jpeg"></form>
+    <form MIME="image/png"></form>
+    <form MIME="image/gif"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="LARGE" ORDERED="false">
+    <form MIME="image/jpg"></form>
+    <form MIME="image/jpeg"></form>
+    <form MIME="image/png"></form>
+    <form MIME="image/gif"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="IMAGE" ORDERED="false">
+    <form MIME="image/jpg"></form>
+    <form MIME="image/jpeg"></form>
+    <form MIME="image/png"></form>
+    <form MIME="image/gif"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="OBJ">
+    <form MIME="image/tiff"/>
+  </dsTypeModel>
+  <dsTypeModel ID="TECHMD">
+    <form MIME="text/xml"/>
+  </dsTypeModel>
+</dsCompositeModel>
+
