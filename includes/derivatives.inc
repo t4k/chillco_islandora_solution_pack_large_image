@@ -75,6 +75,9 @@ function chillco_islandora_solution_pack_large_image_add_datastream(AbstractObje
   $ds->mimeType = $mimetype;
   $ds->setContentFromFile($file);
   try {
+    if (isset($object[$dsid])) {
+      $object->purgeDatastream($dsid);
+    }
     $object->ingestDatastream($ds);
   } catch (exception $e) {
     drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
