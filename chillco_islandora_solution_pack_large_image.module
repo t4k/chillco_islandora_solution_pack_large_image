@@ -114,20 +114,6 @@ function chillco_islandora_solution_pack_large_image_theme($existing, $type, $th
 }
 
 /**
- * Implements hook_preprocess_theme().
- */
-function chillco_islandora_solution_pack_large_image_preprocess_islandora_object_print(array &$variables) {
-  $object = $variables['object'];
-  if (in_array('islandora:chillco_isp_large_image_cmodel', $object->models)) {
-    $url = url("islandora/object/{$object->id}", array('absolute' => TRUE));
-    $variables['content']['link'] = array(
-      '#weight' => -10,
-      '#markup' => t('Persistent link: ') . l($url, $url),
-    );
-  }
-}
-
-/**
  * Implements hook_preprocess().
  */
 function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandora_solution_pack_large_image(&$variables) {
@@ -198,39 +184,6 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
   }
   else {
     $variables['islandora_content'] = NULL;
-  }
-}
-
-/**
- * Implements hook_process_theme().
- */
-function chillco_islandora_solution_pack_large_image_process_islandora_object_print(array &$variables) {
-  $object = $variables['object'];
-  if (in_array('islandora:sp_large_image_cmodel', $object->models)) {
-    $clip = isset($variables['clip']) ? $variables['clip'] : NULL;
-    $variables['content']['buttons'] = array(
-      '#access' => isset($clip),
-      '#prefix' => '<div>',
-      '#suffix' => '</div></br>',
-      '#weight' => -5,
-      'print' => array(
-        '#prefix' => '<strong>',
-        '#markup' => l(t('Print'), 'javascript:window.print();', array('external' => TRUE)),
-        '#suffix' => '</strong>',
-        '#weight' => -5,
-      ),
-      '0' => array(
-        '#markup' => ' | ',
-        '#weight' => -5,
-      ),
-      'download_clip' => array(
-        '#prefix' => '<strong>',
-        '#markup' => l(t('Download Image'), "islandora/object/{$object->id}/download_clip", array(
-                     'query' => array('clip' => $clip))),
-        '#suffix' => '</strong>',
-        '#weight' => -5,
-      ),
-    );
   }
 }
 
