@@ -164,12 +164,12 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
 
   $params = array();
 
-  if (isset($islandora_object['JP2']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['JP2'])) {
+  if (isset($islandora_object['IMAGE']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
     // Get token to allow access to XACML protected datastreams.
     // Always use token authentication in case there is a global policy.
     module_load_include('inc', 'islandora', 'includes/authtokens');
-    $token = islandora_get_object_token($islandora_object->id, 'JP2', 2);
-    $jp2_url = url("islandora/object/{$islandora_object->id}/datastream/JP2/view",
+    $token = islandora_get_object_token($islandora_object->id, 'IMAGE', 2);
+    $jp2_url = url("islandora/object/{$islandora_object->id}/datastream/IMAGE/view",
       array(
         'absolute' => TRUE,
         'query' => array('token' => $token),
@@ -182,17 +182,17 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
   $variables['islandora_content'] = '';
   if ($viewer) {
     if (strpos($viewer, 'islandora-openseadragon') !== FALSE) {
-      if (isset($islandora_object['JP2']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['JP2'])) {
+      if (isset($islandora_object['IMAGE']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
         $variables['image_clip'] = l(t('Clip Image'), "islandora/object/{$islandora_object->id}/print", array('attributes' => array('title' => 'Clip Image', 'id' => 'clip')));
       }
     }
     $variables['islandora_content'] = $viewer;
   }
   // If no viewer is configured just show the jpeg.
-  elseif (isset($islandora_object['JPG']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['JPG'])) {
+  elseif (isset($islandora_object['IMAGE']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
     $params = array(
       'title' => $islandora_object->label,
-      'path' => url("islandora/object/{$islandora_object->id}/datastream/JPG/view"),
+      'path' => url("islandora/object/{$islandora_object->id}/datastream/IMAGE/view"),
     );
     $variables['islandora_content'] = theme('image', $params);
   }
