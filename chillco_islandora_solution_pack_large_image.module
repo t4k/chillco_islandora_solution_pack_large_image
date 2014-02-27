@@ -164,7 +164,7 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
     $params['jp2_url'] = $jp2_url;
   }
 
-  $viewer = islandora_get_viewer($params, 'islandora_large_image_viewers', $islandora_object);
+  $viewer = islandora_get_viewer($params, 'chillco_islandora_solution_pack_large_image_viewers', $islandora_object);
   $variables['islandora_content'] = '';
   if ($viewer) {
     if (strpos($viewer, 'islandora-openseadragon') !== FALSE) {
