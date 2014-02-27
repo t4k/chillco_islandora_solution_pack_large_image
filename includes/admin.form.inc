@@ -18,6 +18,8 @@
  */
 function chillco_islandora_solution_pack_large_image_admin(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/solution_packs');
+
   drupal_set_message('Use will upload a tiff/jpeg which will get converted to the appropriate derivatives. Will not use jpeg2000 until further compatibility.', 'warning');
   $form['chillco_islandora_solution_pack_large_image_lossless'] = array(
     '#type' => 'checkbox',
@@ -71,6 +73,8 @@ function chillco_islandora_solution_pack_large_image_admin(array $form, array &$
       ),
     ),
   );
+
+  $form += islandora_viewers_form('chillco_islandora_solution_pack_large_image_viewers', 'image/jp2');
 
   return system_settings_form($form);
 }

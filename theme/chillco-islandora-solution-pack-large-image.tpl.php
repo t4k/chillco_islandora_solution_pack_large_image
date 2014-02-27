@@ -17,22 +17,22 @@
  *   which is a medium sized image. Alternatively this could be a rendered
  *   viewer which displays the JP2 datastream image.
  *
- * @see template_preprocess_islandora_large_image()
- * @see theme_islandora_large_image()
+ * @see template_preprocess_chillco_islandora_solution_pack_large_image()
+ * @see theme_chillco_islandora_solution_pack_large_image()
  */
 ?>
 
-<div class="islandora-large-image-object islandora">
-  <div class="islandora-large-image-content-wrapper clearfix">
+<div class="chillco-islandora-large-image-object islandora">
+  <div class="chillco-islandora-large-image-content-wrapper clearfix">
     <?php if ($islandora_content): ?>
       <?php if (isset($image_clip)): ?>
         <?php print $image_clip; ?>
       <?php endif; ?>
-      <div class="islandora-large-image-content">
+      <div class="chillco-islandora-large-image-content">
         <?php print $islandora_content; ?>
       </div>
     <?php endif; ?>
-  <div class="islandora-large-image-sidebar">
+  <div class="chillco-islandora-large-image-sidebar">
     <?php if (!empty($dc_array['dc:description']['value'])): ?>
       <h2><?php print $dc_array['dc:description']['label']; ?></h2>
       <p><?php print $dc_array['dc:description']['value']; ?></p>
