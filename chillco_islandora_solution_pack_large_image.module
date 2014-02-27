@@ -320,6 +320,53 @@ function chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large
 }
 
 /**
+ * Implements hook_preprocess_islandora_object_print.
+ */
+function chillco_islandora_solution_pack_large_image_preprocess_islandora_object_print(array &$variables) {
+  $object = $variables['object'];
+  if (in_array('islandora:chillco_isp_large_image_cmodel', $object->models)) {
+    $url = url("islandora/object/{$object->id}", array('absolute' => TRUE));
+    $variables['content']['link'] = array(
+      '#weight' => -10,
+      '#markup' => t('Persistent link: ') . l($url, $url),
+    );
+  }
+}
+
+/**
+ * Implements hook_process_islandora_object_print().
+ */
+function chillco_islandora_solution_pack_large_image_process_islandora_object_print(array &$variables) {
+  $object = $variables['object'];
+  if (in_array('islandora:chillco_isp_large_image_cmodel', $object->models)) {
+    $clip = isset($variables['clip']) ? $variables['clip'] : NULL;
+    $variables['content']['buttons'] = array(
+      '#access' => isset($clip),
+      '#prefix' => '<div>',
+      '#suffix' => '</div></br>',
+      '#weight' => -5,
+      'print' => array(
+        '#prefix' => '<strong>',
+        '#markup' => l(t('Print'), 'javascript:window.print();', array('external' => TRUE)),
+        '#suffix' => '</strong>',
+        '#weight' => -5,
+      ),
+      '0' => array(
+        '#markup' => ' | ',
+        '#weight' => -5,
+      ),
+      'download_clip' => array(
+        '#prefix' => '<strong>',
+        '#markup' => l(t('Download Image'), "islandora/object/{$object->id}/download_clip", array(
+                     'query' => array('clip' => $clip))),
+        '#suffix' => '</strong>',
+        '#weight' => -5,
+      ),
+    );
+  }
+}
+
+/**
  * Implements hook_CMODEL_PID_DSID_islandora_datastream_ingested().
  */
 function chillco_islandora_solution_pack_large_image_islandora_chillco_isp_large_image_cmodel_OBJ_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
