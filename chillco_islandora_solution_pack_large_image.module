@@ -162,6 +162,8 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
       ));
     // Display large image.
     $params['jp2_url'] = $jp2_url;
+    $params['title'] = $islandora_object->label;
+    $params['path'] = url("islandora/object/{$islandora_object->id}/datastream/IMAGE/view");
   }
 
   $viewer = islandora_get_viewer($params, 'chillco_islandora_solution_pack_large_image_viewers', $islandora_object);

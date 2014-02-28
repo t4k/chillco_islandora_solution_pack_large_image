@@ -74,7 +74,7 @@ function chillco_islandora_solution_pack_large_image_admin(array $form, array &$
     ),
   );
 
-  $form += islandora_viewers_form('chillco_islandora_solution_pack_large_image_viewers', 'image/jp2');
+  $form += islandora_viewers_form('chillco_islandora_solution_pack_large_image_viewers', 'image/jpeg');
 
   return system_settings_form($form);
 }
