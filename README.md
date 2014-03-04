@@ -3,12 +3,12 @@
 ## Introduction
 
 A test implementation of large images which consists of the following datastreams:
-MODS
-OBJ (mimetype image/tiff)
-IMAGE (mimetype image/jpg,image/png,image/gif)
-LARGE (mimetype image/jpg,image/png,image/gif)
-MEDIUM (mimetype image/jpg,image/png,image/gif)
-TN (mimetype image/jpg,image/png,image/gif)
+* MODS
+* OBJ (mimetype image/tiff)
+* IMAGE (mimetype image/jpg,image/png,image/gif)
+* LARGE (mimetype image/jpg,image/png,image/gif)
+* MEDIUM (mimetype image/jpg,image/png,image/gif)
+* TN (mimetype image/jpg,image/png,image/gif)
 
 This can will ingest and create derivatives off the OBJ or IMAGE datastreams (preference given to OBJ if both are provided). It is done via image style presets which are alterable by the front-end site admin (no hard presets). This also allowed to get familiar with the Islandora APIs. The large image is a lossy conversion (via imagemagick) of the OBJ datastream if it exists. Works well with jQuery Zoom module.
 
