@@ -49,20 +49,24 @@
     <?php endif; ?>
   </div>
   </div>
-  <fieldset class="collapsible collapsed islandora-large-image-metadata">
+  <fieldset class="collapsible islandora-large-image-metadata">
   <legend><span class="fieldset-legend"><?php print t('Details'); ?></span></legend>
     <div class="fieldset-wrapper">
       <dl class="islandora-inline-metadata islandora-large-image-fields">
-        <?php $row_field = 0; ?>
-        <?php foreach($dc_array as $key => $value): ?>
-          <dt class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-            <?php print $value['label']; ?>
-          </dt>
-          <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-            <?php print $value['value']; ?>
-          </dd>
-          <?php $row_field++; ?>
-        <?php endforeach; ?>
+        <?php if($islandora_mods): ?>
+          <?php print $islandora_mods ?>
+        <?php else: ?>
+          <?php $row_field = 0; ?>
+          <?php foreach($dc_array as $key => $value): ?>
+            <dt class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
+              <?php print $value['label']; ?>
+            </dt>
+            <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
+              <?php print $value['value']; ?>
+            </dd>
+            <?php $row_field++; ?>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </dl>
     </div>
   </fieldset>
