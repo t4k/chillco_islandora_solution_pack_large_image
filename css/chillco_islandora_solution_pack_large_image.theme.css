@@ -69,6 +69,6 @@ body.two-sidebars .islandora-large-image-sidebar {
 }
 
 dl.islandora-inline-metadata {
-  letter-spacing: !important;
-  word-spacing: !important;
+  letter-spacing: normal;
+  word-spacing: normal;
 }
