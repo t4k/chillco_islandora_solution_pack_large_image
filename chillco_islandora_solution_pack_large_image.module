@@ -135,7 +135,7 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
   }
   // Get MODS metadata.
   if (module_exists('islandora_mods_display')) {
-    $variables['islandora_mods'] = theme('islandora_mods_display_display', $islandora_object, FALSE);
+    $variables['islandora_mods'] = theme('islandora_mods_display_display', array('islandora_object' => $islandora_object, 'print' => FALSE));
   }
 
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
