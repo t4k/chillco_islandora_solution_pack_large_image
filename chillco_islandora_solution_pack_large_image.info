@@ -6,4 +6,4 @@ package = Chillco
 version = 7.x-0.1
 core = 7.x
 configure = admin/islandora/chillco_large_image
-stylesheets[all][] = css/chillco_islandora_large_image.theme.css
+stylesheets[all][] = css/chillco_islandora_solution_pack_large_image.theme.css
