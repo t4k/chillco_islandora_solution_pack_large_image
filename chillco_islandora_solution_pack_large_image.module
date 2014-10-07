@@ -124,7 +124,7 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
   module_load_include('inc', 'islandora', 'includes/datastream');
   module_load_include('inc', 'islandora', 'includes/utilities');
   // Get DC metadata.
-  if (isset($islandora_object['DC']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['DC'])) {
+  if (isset($islandora_object['DC']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['DC'])) {
     try {
       $dc = $islandora_object['DC']->content;
       $dc_object = DublinCore::importFromXMLString($dc);
@@ -144,7 +144,7 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
   $variables['theme_hook_suggestions'][] = 'chillco_islandora_solution_pack_large_image__' . str_replace(':', '_', $islandora_object->id);
   $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
   // Thumbnail.
-  if (isset($islandora_object['TN']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['TN'])) {
+  if (isset($islandora_object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['TN'])) {
     $params = array(
       'title' => $islandora_object->label,
       'path' => url("islandora/object/{$islandora_object->id}/datastream/TN/view"),
@@ -155,7 +155,7 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
 
   $params = array();
 
-  if (isset($islandora_object['IMAGE']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
+  if (isset($islandora_object['IMAGE']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
     // Get token to allow access to XACML protected datastreams.
     // Always use token authentication in case there is a global policy.
     module_load_include('inc', 'islandora', 'includes/authtokens');
@@ -177,7 +177,7 @@ function chillco_islandora_solution_pack_large_image_preprocess_chillco_islandor
     $variables['islandora_content'] = $viewer;
   }
   // If no viewer is configured just show the jpeg.
-  elseif (isset($islandora_object['IMAGE']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
+  elseif (isset($islandora_object['IMAGE']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['IMAGE'])) {
     $params = array(
       'title' => $islandora_object->label,
       'path' => url("islandora/object/{$islandora_object->id}/datastream/IMAGE/view"),
